@@ -12,6 +12,9 @@ public class MatchmakerPanel : MonoBehaviourPunCallbacks
     [SerializeField] private Button createButton; 
     [SerializeField] private Button joinButton;
     [SerializeField] private Button joinRandomRoomButton;
+
+    [SerializeField] private RectTransform content;
+
     //private TypedLobby lobby = new TypedLobby("lobby", LobbyType.Default);
 
     void Start()
