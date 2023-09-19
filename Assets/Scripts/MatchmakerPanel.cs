@@ -17,21 +17,14 @@ public class MatchmakerPanel : MonoBehaviourPunCallbacks
 
     //private TypedLobby lobby = new TypedLobby("lobby", LobbyType.Default);
 
-    void Start()
-    {
-        PhotonNetwork.NickName = "Player" + Random.Range(1000, 9999);
-
-        PhotonNetwork.AutomaticallySyncScene = true;
-        PhotonNetwork.GameVersion = "1";
-        PhotonNetwork.ConnectUsingSettings();
-    }
+  
     public override void OnConnectedToMaster()
     {
         Log("Connected to Master");
         Init();
     }
 
-    private void Init()
+    public void Init()
     {
         createButton.onClick.AddListener(CreateRoom);
         //joinButton.onClick.AddListener(JoinRoom);
@@ -40,8 +33,11 @@ public class MatchmakerPanel : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
-        PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions { MaxPlayers = 2 });
+        string roomName = "Room" + Random.Range(0, 50);
+        PhotonNetwork.CreateRoom("roomName", new Photon.Realtime.RoomOptions { MaxPlayers = 2 });
         RoomInfo room = PhotonNetwork.CurrentRoom;
+        Log("Create the room");
+
         
     }
 
@@ -54,12 +50,20 @@ public class MatchmakerPanel : MonoBehaviourPunCallbacks
     {
         if (room == null) return;
         PhotonNetwork.JoinRoom(room.RoomName);
+       
+    }
+    public override void OnCreatedRoom()
+    {
+        base.OnCreatedRoom();
+       // Log(PhotonNetwork.CurrentRoom.Name);
     }
 
     public override void OnJoinedRoom()
     {
-        Log("Joinred the room");
+        Log("Joined the room " + PhotonNetwork.CurrentRoom.Name);
         //PhotonNetwork.LoadLevel("Game");
+       // Log(PhotonNetwork.CurrentRoom.Name);
+        //PhotonNetwork.GetCustomRoomList(TypedLobby.Default, "");
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -73,4 +77,16 @@ public class MatchmakerPanel : MonoBehaviourPunCallbacks
         logText.text += "\n";
         logText.text += message;
     }
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        base.OnRoomListUpdate(roomList);
+        //Debug.Log(PhotonNetwork.CountOfRooms);
+        Log(PhotonNetwork.CountOfRooms.ToString());
+        foreach (var room in roomList)
+        {
+            Log(room.Name);
+        }
+    }
+    
 }
