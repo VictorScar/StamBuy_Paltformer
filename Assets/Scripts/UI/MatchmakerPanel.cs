@@ -48,12 +48,13 @@ public class MatchmakerPanel : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRandomRoom();
     }
 
-    public void JoinRoom(LobbyRoom room)
-    {
-        if (room == null) return;
-        PhotonNetwork.JoinRoom(room.RoomName);
+    //public void JoinRoom(LobbyRoom room)
+    //{
+    //    if (room == null) return;
+    //    PhotonNetwork.JoinRoom(room.RoomName);
 
-    }
+    //}
+
     public override void OnCreatedRoom()
     {
         base.OnCreatedRoom();
