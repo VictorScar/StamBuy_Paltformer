@@ -43,5 +43,10 @@ public class PlayerInput : MonoBehaviour
         {
             controller.Jump();
         }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            controller.Fire();
+        }
     }
 }

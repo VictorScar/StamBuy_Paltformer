@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 5687966112390461257}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,6 +36,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7732441640536585679}
+  - {fileID: 1410426985800520954}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -52,8 +53,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 4844684165952087926}
+  gun: {fileID: 4649384730936549568}
   moveSpeed: 2
-  jumpHeight: 150
+  jumpForce: 150
+  maxHealth: 100
+  health: 100
 --- !u!114 &4035073817257030783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,6 +175,79 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!1001 &848548551623741350
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2642891085687393768}
+    m_Modifications:
+    - target: {fileID: 1753151188371987292, guid: c466b5e55ba502442ae276819916d53e, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1753151188371987292, guid: c466b5e55ba502442ae276819916d53e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.0393994
+      objectReference: {fileID: 0}
+    - target: {fileID: 1753151188371987292, guid: c466b5e55ba502442ae276819916d53e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.25313324
+      objectReference: {fileID: 0}
+    - target: {fileID: 1753151188371987292, guid: c466b5e55ba502442ae276819916d53e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1753151188371987292, guid: c466b5e55ba502442ae276819916d53e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1753151188371987292, guid: c466b5e55ba502442ae276819916d53e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1753151188371987292, guid: c466b5e55ba502442ae276819916d53e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1753151188371987292, guid: c466b5e55ba502442ae276819916d53e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1753151188371987292, guid: c466b5e55ba502442ae276819916d53e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1753151188371987292, guid: c466b5e55ba502442ae276819916d53e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1753151188371987292, guid: c466b5e55ba502442ae276819916d53e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6225135310823059510, guid: c466b5e55ba502442ae276819916d53e, type: 3}
+      propertyPath: m_Name
+      value: Gun
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c466b5e55ba502442ae276819916d53e, type: 3}
+--- !u!4 &1410426985800520954 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1753151188371987292, guid: c466b5e55ba502442ae276819916d53e, type: 3}
+  m_PrefabInstance: {fileID: 848548551623741350}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4649384730936549568 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5423258288675204966, guid: c466b5e55ba502442ae276819916d53e, type: 3}
+  m_PrefabInstance: {fileID: 848548551623741350}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c1c3decbd82f324f8717ffcb63f3175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6325637953690185749
 PrefabInstance:
   m_ObjectHideFlags: 0
