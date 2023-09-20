@@ -1,12 +1,15 @@
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
 {
+    [SerializeField] private PhotonView photonView;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Gun gun;
 
@@ -15,6 +18,15 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private float health = 100f;
+
+    private PointCounter pointCounter;
+
+    public PointCounter PointCounter { get => pointCounter; }
+
+    public void Start()
+    {
+        pointCounter = new PointCounter();
+    }
 
     public void Move(Vector2 direction)
     {
@@ -36,6 +48,8 @@ public class PlayerController : MonoBehaviour
 
     public void GetDamage(float damage)
     {
+        if(photonView.IsMine)
+
         if (damage <= health)
         {
             health -= damage;
@@ -50,6 +64,7 @@ public class PlayerController : MonoBehaviour
     private void Death()
     {
         Debug.Log(PhotonNetwork.LocalPlayer.NickName + " is Dead!");
+        PhotonNetwork.Destroy(gameObject);
     }
 
     private void PlayerRotate(Vector2 direction)
@@ -77,5 +92,31 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(health);
+        }
+        else
+        {
+            health = (float)stream.ReceiveNext();
+        }
 
+    }
+
+    public void OnEvent(EventData photonEvent)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void OnEnable()
+    {
+       
+    }
+
+    private void OnDisable()
+    {
+        
+    }
 }

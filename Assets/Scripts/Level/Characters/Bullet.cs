@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] Rigidbody2D rb;
     [SerializeField] PhotonView photonView;
 
-    [SerializeField] private float speed = 20f;
+    [SerializeField] private float speed = 15f;
     [SerializeField] private float damage = 20f;
     [SerializeField] private float lifeTime = 3f;
 
@@ -17,17 +17,15 @@ public class Bullet : MonoBehaviour
         StartCoroutine(BulletFly());
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         //rb.velocity = transform.right * speed * Time.fixedDeltaTime;
-        transform.position += transform.right * speed * Time.deltaTime;
+
+     
+          transform.position += transform.right * speed * Time.deltaTime;
+       
     }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-
-    //}
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

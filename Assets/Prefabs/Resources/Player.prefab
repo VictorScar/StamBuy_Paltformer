@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d024d348fe7ea04f856f2ec6298d11c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  photonView: {fileID: 5529170053116679276}
   rb: {fileID: 4844684165952087926}
   gun: {fileID: 4649384730936549568}
   moveSpeed: 2
@@ -91,6 +92,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 7151085979856709429}
   - {fileID: 5218959680674271890}
   - {fileID: 5687966112390461257}
   sceneViewId: 0
