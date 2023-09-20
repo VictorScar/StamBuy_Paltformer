@@ -8,10 +8,14 @@ using Random = UnityEngine.Random;
 public class LobbyManger : MonoBehaviourPunCallbacks
 {
     [SerializeField] private MatchmakerPanel matchmakerPrefab;
+    [SerializeField] private RoomPanel roomPanelPrefab;
     private MatchmakerPanel matchmaker;
+    private RoomPanel roomPanel;
 
     void Start()
     {
+        CreateUIElements();
+
         PhotonNetwork.NickName = "Player" + Random.Range(1000, 9999);
 
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -19,12 +23,6 @@ public class LobbyManger : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
 
         
-    }
-
-    private void CreateMatchmakerPanel()
-    {
-        matchmaker = Instantiate(matchmakerPrefab);
-        matchmaker.Init();
     }
 
     public override void OnConnectedToMaster()
@@ -37,6 +35,33 @@ public class LobbyManger : MonoBehaviourPunCallbacks
     {
         Debug.Log("Join to lobby");
         base.OnJoinedLobby();
+        //CreateMatchmakerPanel();
+        ShowMatchmakerPanel();
+    }
+
+    public void ShowMatchmakerPanel()
+    {
+        matchmaker.gameObject.SetActive(true);
+    }
+
+    public void ShowRoomPanel()
+    {
+        roomPanel.Init();
+        matchmaker.gameObject.SetActive(false);
+        roomPanel.gameObject.SetActive(true);
+    }
+
+    private void CreateUIElements()
+    {
         CreateMatchmakerPanel();
+        roomPanel = Instantiate(roomPanelPrefab);
+        roomPanel.gameObject.SetActive(false);
+    }
+
+    private void CreateMatchmakerPanel()
+    {
+        matchmaker = Instantiate(matchmakerPrefab);
+        matchmaker.Init(this);
+        matchmaker.gameObject.SetActive(false);
     }
 }

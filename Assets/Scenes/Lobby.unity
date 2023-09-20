@@ -320,3 +320,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   matchmakerPrefab: {fileID: 7558191812069001054, guid: 42b32d2e51c292e468843ceef65a540a, type: 3}
+  roomPanelPrefab: {fileID: 8463386371106003303, guid: e06b3de663c712b4b9a4508cd1a79157, type: 3}

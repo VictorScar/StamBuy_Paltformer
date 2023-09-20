@@ -9,23 +9,25 @@ using UnityEngine.UI;
 public class MatchmakerPanel : MonoBehaviourPunCallbacks
 {
     [SerializeField] private TMP_Text logText;
-    [SerializeField] private Button createButton; 
+    [SerializeField] private Button createButton;
     [SerializeField] private Button joinButton;
     [SerializeField] private Button joinRandomRoomButton;
 
     [SerializeField] private RectTransform content;
 
-    //private TypedLobby lobby = new TypedLobby("lobby", LobbyType.Default);
+    private LobbyManger lobbyManger;
 
-  
-    public override void OnConnectedToMaster()
-    {
-        Log("Connected to Master");
-        Init();
-    }
 
-    public void Init()
+    //public override void OnConnectedToMaster()
+    //{
+    //    Log("Connected to Master");
+    //    Init();
+    //}
+
+    public void Init(LobbyManger lobbyManger)
     {
+        this.lobbyManger = lobbyManger;
+
         createButton.onClick.AddListener(CreateRoom);
         //joinButton.onClick.AddListener(JoinRoom);
         joinRandomRoomButton.onClick.AddListener(JoinRandomRoom);
@@ -38,7 +40,7 @@ public class MatchmakerPanel : MonoBehaviourPunCallbacks
         RoomInfo room = PhotonNetwork.CurrentRoom;
         Log("Create the room");
 
-        
+
     }
 
     public void JoinRandomRoom()
@@ -50,20 +52,18 @@ public class MatchmakerPanel : MonoBehaviourPunCallbacks
     {
         if (room == null) return;
         PhotonNetwork.JoinRoom(room.RoomName);
-       
+
     }
     public override void OnCreatedRoom()
     {
         base.OnCreatedRoom();
-       // Log(PhotonNetwork.CurrentRoom.Name);
+        // Log(PhotonNetwork.CurrentRoom.Name);
     }
 
     public override void OnJoinedRoom()
     {
-        Log("Joined the room " + PhotonNetwork.CurrentRoom.Name);
-        //PhotonNetwork.LoadLevel("Game");
-       // Log(PhotonNetwork.CurrentRoom.Name);
-        //PhotonNetwork.GetCustomRoomList(TypedLobby.Default, "");
+        Log("Player "+ PhotonNetwork.NickName + " Joined the room " + PhotonNetwork.CurrentRoom.Name);
+        lobbyManger.ShowRoomPanel();
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -88,5 +88,5 @@ public class MatchmakerPanel : MonoBehaviourPunCallbacks
             Log(room.Name);
         }
     }
-    
+
 }
