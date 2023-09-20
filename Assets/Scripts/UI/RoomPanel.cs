@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class RoomPanel : MonoBehaviour
@@ -53,6 +54,7 @@ public class RoomPanel : MonoBehaviour
     private void StartGame()
     {
         Debug.Log("Start Game!");
+        SceneManager.LoadScene("Game");
     }
 
     private void ShowPlayerList()
