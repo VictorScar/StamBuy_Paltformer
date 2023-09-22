@@ -36,15 +36,17 @@ public class Bullet : MonoBehaviour
 
         if (collision.tag == "Player")
         {
+         
+        }
+        if (photonView.IsMine)
+        {
             PlayerController playerController = collision.GetComponent<PlayerController>();
 
             if (playerController != null)
             {
                 playerController.GetDamage(damage);
             }
-        }
-        if (photonView.IsMine)
-        {
+
             PhotonNetwork.Destroy(gameObject);
 
         }

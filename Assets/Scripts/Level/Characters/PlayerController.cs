@@ -56,23 +56,13 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
 
     public void GetDamage(float damage)
     {
-        if (photonView.IsMine)
-
-            if (damage <= health)
-            {
-                health -= damage;
-            }
-            else
-            {
-                health = 0f;
-                Death();
-            }
+        photonView.RPC("RPC_GetDamage", RpcTarget.All, damage);
     }
 
     private void Death()
     {
         Debug.Log(PhotonNetwork.LocalPlayer.NickName + " is Dead!");
-        PhotonNetwork.Destroy(gameObject);
+        Destroy(gameObject);
     }
 
     private void PlayerRotate(Vector2 direction)
@@ -89,14 +79,7 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
 
     IEnumerator JumpMoving()
     {
-        //float currentHeight = 0f;
-
-        //while (currentHeight < jumpForce)
-        //{
-        //    Vector3.MoveTowards(transform.position, transform.position + new Vector3(0, jumpForce, 0), 0.5f);
-        //    currentHeight += 0.5f;
-        //    yield return null;
-        //}
+   
         float currentTime = 0;
        // canJumping = false;
         while (currentTime < jumpDuration)
@@ -105,8 +88,7 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
             currentTime += Time.fixedDeltaTime;
             yield return null;
         }
-        //yield return new WaitForSeconds(jumpDuration);
-        //canJumping = true;
+       
 
     }
 
@@ -143,16 +125,18 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
 
     }
 
-    //private void OnTriggerStay2D(Collider2D collision)
-    //{
-    //    if (collision.IsTouchingLayers(LayerMask.NameToLayer("Ground")))
-    //    {
-    //        canJumping = true;
-    //    }
-    //    else
-    //    {
-    //        canJumping = false;
-    //    }
-    //}
+    [PunRPC]
+    private void RPC_GetDamage(float damage)
+    {
+        if (damage < health)
+        {
+            health -= damage;
+        }
+        else
+        {
+            health = 0;
+            Death();
+        }
+    }
       
 }
