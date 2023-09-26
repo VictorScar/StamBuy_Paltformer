@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
     {
 
         float currentTime = 0;
-       // float syncDeltaTime = 0;
+        // float syncDeltaTime = 0;
 
         while (currentTime < jumpDuration)
         {
@@ -160,7 +160,7 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
         {
             RunTimeLogger.Log(syncDeltaTime.ToString());
         }
-       
+
 
         rb.AddForce(Vector2.down * gravityForce * Time.fixedDeltaTime);
         PlayerRotate();
@@ -180,7 +180,6 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
     [PunRPC]
     private void RPC_GetDamage(float damage)
     {
-        onHealthChanged?.Invoke(health);
 
         if (damage < health)
         {
@@ -191,6 +190,7 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
             health = 0;
             Death();
         }
+        onHealthChanged?.Invoke(health);
     }
 
 }
