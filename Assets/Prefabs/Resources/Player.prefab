@@ -128,8 +128,11 @@ MonoBehaviour:
   rb: {fileID: 4844684165952087926}
   gun: {fileID: 4649384730936549568}
   groundChecker: {fileID: 5244944491155680968}
+  characterSprite: {fileID: 7732441640536585712}
+  weaponSprite: {fileID: 7052568406834216419}
+  aim: {fileID: 6260578913667955502}
   moveSpeed: 2
-  jumpForce: 300
+  jumpForce: 500
   jumpDuration: 1
   gravityForce: 3500
   maxHealth: 100
@@ -325,6 +328,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c1c3decbd82f324f8717ffcb63f3175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &6260578913667955502 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6711679781111215240, guid: c466b5e55ba502442ae276819916d53e, type: 3}
+  m_PrefabInstance: {fileID: 848548551623741350}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &7052568406834216419 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 7645256126707692101, guid: c466b5e55ba502442ae276819916d53e, type: 3}
+  m_PrefabInstance: {fileID: 848548551623741350}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6325637953690185749
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -401,5 +414,10 @@ PrefabInstance:
 --- !u!4 &7732441640536585679 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4361182636781176282, guid: 3f342161fd81307439ae403e7fbe32ae, type: 3}
+  m_PrefabInstance: {fileID: 6325637953690185749}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &7732441640536585712 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4361182636781176293, guid: 3f342161fd81307439ae403e7fbe32ae, type: 3}
   m_PrefabInstance: {fileID: 6325637953690185749}
   m_PrefabAsset: {fileID: 0}

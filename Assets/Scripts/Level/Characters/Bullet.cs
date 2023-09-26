@@ -34,10 +34,10 @@ public class Bullet : MonoBehaviour
             return;
         }
 
-        if (collision.tag == "Player")
-        {
+        //if (collision.tag == "Player")
+        //{
          
-        }
+        //}
         if (photonView.IsMine)
         {
             PlayerController playerController = collision.GetComponent<PlayerController>();

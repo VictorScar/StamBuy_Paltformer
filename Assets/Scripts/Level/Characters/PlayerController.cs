@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Gun gun;
     [SerializeField] private GroundCheker groundChecker;
+    [SerializeField] private SpriteRenderer characterSprite;
+    [SerializeField] private SpriteRenderer weaponSprite;
+    [SerializeField] private Transform aim;
 
     [SerializeField] private float moveSpeed = 100f;
     [SerializeField] private float jumpForce = 2f;
@@ -23,18 +26,29 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
     [SerializeField] private float health = 100f;
 
     private PointCounter pointCounter;
-   // private bool canJumping = false;
+
+    private Vector2 _direction;
 
     public PointCounter PointCounter { get => pointCounter; }
+    public float MaxHealth { get => maxHealth; }
+    public PhotonView PV { get => photonView; }
+
+    public event Action<float> onHealthChanged;
+    public event Action onCharacterDied;
+    public event Action<PlayerController> onSpawn;
 
     public void Start()
     {
         pointCounter = new PointCounter();
+
+        GameLevel.Instance.AddPlayerPawn(this);
+        //onSpawn?.Invoke(this);
     }
 
     public void Move(Vector2 direction)
     {
-        PlayerRotate(direction);
+        _direction = direction;
+        //PlayerRotate(direction);
         rb.velocity = direction * moveSpeed * 100f * Time.fixedDeltaTime;
         //transform.position += new Vector3(direction.x, direction.y, 0) * moveSpeed * Time.deltaTime;
     }
@@ -65,30 +79,38 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
         Destroy(gameObject);
     }
 
-    private void PlayerRotate(Vector2 direction)
+    private void PlayerRotate()
     {
-        if (direction == Vector2.right)
+        if (_direction == Vector2.right)
         {
-            transform.rotation = Quaternion.identity;
+            //transform.rotation = Quaternion.identity;
+            characterSprite.flipX = false;
+            weaponSprite.flipX = false;
+            aim.transform.rotation = Quaternion.identity;
         }
-        else if (direction == Vector2.left)
+        else if (_direction == Vector2.left)
         {
-            transform.rotation = Quaternion.Euler(0, 180, 0);
+            //transform.rotation = Quaternion.Euler(0, 180, 0);
+            characterSprite.flipX = true;
+            weaponSprite.flipX = true;
+            aim.transform.rotation = Quaternion.Euler(0, 180, 0);
         }
     }
 
     IEnumerator JumpMoving()
     {
-   
+
         float currentTime = 0;
-       // canJumping = false;
+
         while (currentTime < jumpDuration)
         {
             rb.AddForce(Vector2.up * jumpForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
             currentTime += Time.fixedDeltaTime;
             yield return null;
         }
-       
+
+        //rb.AddForce(Vector2.up * jumpForce * Time.deltaTime, ForceMode2D.Force);
+        //yield return null;
 
     }
 
@@ -96,23 +118,24 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(health);
+            stream.SendNext(_direction);
         }
         else
         {
-            health = (float)stream.ReceiveNext();
+            _direction = (Vector2)stream.ReceiveNext();
         }
 
     }
 
     public void OnEvent(EventData photonEvent)
     {
-        throw new NotImplementedException();
+
     }
 
     private void FixedUpdate()
     {
         rb.AddForce(Vector2.down * gravityForce * Time.fixedDeltaTime);
+        PlayerRotate();
     }
 
     private void OnEnable()
@@ -138,5 +161,5 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
             Death();
         }
     }
-      
+
 }
