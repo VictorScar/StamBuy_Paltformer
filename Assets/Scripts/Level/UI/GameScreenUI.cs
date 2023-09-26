@@ -9,8 +9,11 @@ public class GameScreenUI : MonoBehaviour
 {
     [SerializeField] private Button exitButton;
     [SerializeField] private TMP_Text counterUI;
+    [SerializeField] private TMP_Text logText;
 
     private PlayerController _playerController;
+
+    public TMP_Text LogText { get => logText; }
 
     public void Init(PlayerController playerController)
     {

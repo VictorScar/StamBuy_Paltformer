@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
     [SerializeField] private SpriteRenderer characterSprite;
     [SerializeField] private SpriteRenderer weaponSprite;
     [SerializeField] private Transform aim;
+    [SerializeField] private Animator animator;
 
     [SerializeField] private float moveSpeed = 100f;
     [SerializeField] private float jumpForce = 2f;
@@ -28,6 +29,8 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
     private PointCounter pointCounter;
 
     private Vector2 _direction;
+    private int anamtorState;
+    private float syncDeltaTime;
 
     public PointCounter PointCounter { get => pointCounter; }
     public float MaxHealth { get => maxHealth; }
@@ -48,9 +51,19 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
     public void Move(Vector2 direction)
     {
         _direction = direction;
-        //PlayerRotate(direction);
+
+        if (_direction == Vector2.zero)
+        {
+            anamtorState = 0;
+        }
+        else
+        {
+            anamtorState = 2;
+        }
+
+
         rb.velocity = direction * moveSpeed * 100f * Time.fixedDeltaTime;
-        //transform.position += new Vector3(direction.x, direction.y, 0) * moveSpeed * Time.deltaTime;
+
     }
 
     public void Jump()
@@ -101,11 +114,12 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
     {
 
         float currentTime = 0;
+       // float syncDeltaTime = 0;
 
         while (currentTime < jumpDuration)
         {
             rb.AddForce(Vector2.up * jumpForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
-            currentTime += Time.fixedDeltaTime;
+            currentTime += Time.deltaTime;
             yield return null;
         }
 
@@ -119,10 +133,14 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
         if (stream.IsWriting)
         {
             stream.SendNext(_direction);
+            stream.SendNext(anamtorState);
+            stream.SendNext(syncDeltaTime);
         }
         else
         {
             _direction = (Vector2)stream.ReceiveNext();
+            anamtorState = (int)stream.ReceiveNext();
+            syncDeltaTime = (float)stream.ReceiveNext();
         }
 
     }
@@ -134,8 +152,19 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
 
     private void FixedUpdate()
     {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            syncDeltaTime = Time.fixedDeltaTime;
+        }
+        else
+        {
+            RunTimeLogger.Log(syncDeltaTime.ToString());
+        }
+       
+
         rb.AddForce(Vector2.down * gravityForce * Time.fixedDeltaTime);
         PlayerRotate();
+        animator.SetInteger("Animate", anamtorState);
     }
 
     private void OnEnable()

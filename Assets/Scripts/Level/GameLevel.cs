@@ -92,7 +92,8 @@ public class GameLevel : MonoBehaviour
 
     private void CreatePawnsUI()
     {
-        Instantiate(gameScreenPrefab);
+        var gameScreen = Instantiate(gameScreenPrefab);
+        RunTimeLogger.AttackUIText(gameScreen.LogText);
     }
 
     private void CreateUIScreen()

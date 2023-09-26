@@ -131,9 +131,10 @@ MonoBehaviour:
   characterSprite: {fileID: 7732441640536585712}
   weaponSprite: {fileID: 7052568406834216419}
   aim: {fileID: 6260578913667955502}
+  animator: {fileID: 7732441640536585713}
   moveSpeed: 2
-  jumpForce: 500
-  jumpDuration: 1
+  jumpForce: 400
+  jumpDuration: 0.2
   gravityForce: 3500
   maxHealth: 100
   health: 100
@@ -419,5 +420,10 @@ Transform:
 --- !u!212 &7732441640536585712 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 4361182636781176293, guid: 3f342161fd81307439ae403e7fbe32ae, type: 3}
+  m_PrefabInstance: {fileID: 6325637953690185749}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7732441640536585713 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4361182636781176292, guid: 3f342161fd81307439ae403e7fbe32ae, type: 3}
   m_PrefabInstance: {fileID: 6325637953690185749}
   m_PrefabAsset: {fileID: 0}
