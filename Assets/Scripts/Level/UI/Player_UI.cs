@@ -14,16 +14,17 @@ public class Player_UI : MonoBehaviour
     public void Init(PlayerController playerController)
     {
         _playerController = playerController;
-        PlaceAnPanel();
+        //PlaceAnPanel();
         heathBar.Init(_playerController.MaxHealth);
+        playerNameUI.text = playerController.PV.Owner.NickName;
         _playerController.onHealthChanged += heathBar.UpdateIndicator;
         _playerController.onCharacterDied += Detach;
     }
 
-    private void PlaceAnPanel()
-    {
+    //private void PlaceAnPanel()
+    //{
         
-    }
+    //}
 
     private void Detach()
     {
