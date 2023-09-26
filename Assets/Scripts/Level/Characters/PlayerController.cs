@@ -151,6 +151,8 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
     [PunRPC]
     private void RPC_GetDamage(float damage)
     {
+        onHealthChanged?.Invoke(health);
+
         if (damage < health)
         {
             health -= damage;

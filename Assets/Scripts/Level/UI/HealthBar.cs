@@ -15,6 +15,6 @@ public class HealthBar : MonoBehaviour
 
     public void UpdateIndicator(float value)
     {
-        indicator.localScale = new Vector3(value / maxValue, 1, 1);
+        indicator.localScale = new Vector3(value / maxValue, indicator.localScale.y, indicator.localScale.z);
     }
 }
