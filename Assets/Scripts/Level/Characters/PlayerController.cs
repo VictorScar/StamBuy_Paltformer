@@ -89,6 +89,7 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
     private void Death()
     {
         Debug.Log(PhotonNetwork.LocalPlayer.NickName + " is Dead!");
+        onCharacterDied?.Invoke();
         Destroy(gameObject);
     }
 

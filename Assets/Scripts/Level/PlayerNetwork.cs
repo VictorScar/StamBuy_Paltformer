@@ -8,7 +8,6 @@ public class PlayerNetwork : MonoBehaviour
 {
     [SerializeField] private PhotonView pv;
 
-    // private Player _player;
     private PlayerController _pawn;
 
     public PhotonView PV { get => pv; }
@@ -17,11 +16,20 @@ public class PlayerNetwork : MonoBehaviour
     private void Start()
     {
         GameLevel.Instance.AddPlayerNetworking(this);
-        Debug.Log("PlayerNetwork!");
     }
 
     public void Init(PlayerController pawn)
     {
         _pawn = pawn;
+        _pawn.onCharacterDied += PlayerLeave;
+    }
+
+    private void PlayerLeave()
+    {
+        Debug.Log("Dis");
+        if (pv.IsMine)
+        {
+            PhotonNetwork.Disconnect();
+        }
     }
 }
