@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
 
     public event Action<float> onHealthChanged;
     public event Action onCharacterDied;
-    public event Action<PlayerController> onSpawn;
+    //public event Action<PlayerController> onSpawn;
 
     public void Start()
     {
@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
     {
         _direction = direction;
 
-        if (_direction == Vector2.zero)
+        if (_direction == Vector2.zero || !groundChecker.IsGrounded)
         {
             anamtorState = 0;
         }
@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
     {
         Debug.Log(PhotonNetwork.LocalPlayer.NickName + " is Dead!");
         onCharacterDied?.Invoke();
-        Destroy(gameObject);
+        // Destroy(gameObject);
     }
 
     private void PlayerRotate()
@@ -162,10 +162,14 @@ public class PlayerController : MonoBehaviour, IPunObservable, IOnEventCallback
             RunTimeLogger.Log(syncDeltaTime.ToString());
         }
 
-
-        rb.AddForce(Vector2.down * gravityForce * Time.fixedDeltaTime);
         PlayerRotate();
         animator.SetInteger("Animate", anamtorState);
+
+        if (!groundChecker.IsGrounded)
+        {
+            rb.AddForce(Vector2.down * gravityForce * Time.fixedDeltaTime);
+        }
+
     }
 
     private void OnEnable()
