@@ -2,6 +2,7 @@ using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameLevel : MonoBehaviour
@@ -92,12 +93,6 @@ public class GameLevel : MonoBehaviour
 
     private void CreatePawnsUI()
     {
-        var gameScreen = Instantiate(gameScreenPrefab);
-        RunTimeLogger.AttackUIText(gameScreen.LogText);
-    }
-
-    private void CreateUIScreen()
-    {
         foreach (var player in players)
         {
             var pawn = player.Pawn;
@@ -105,5 +100,14 @@ public class GameLevel : MonoBehaviour
             var pawnUI = Instantiate(playerUIPrefab, uiPos, Quaternion.identity, pawn.transform);
             pawnUI.Init(pawn);
         }
+    }
+
+    private void CreateUIScreen()
+    {
+        var currentPlayer = players.First(p => p.PV.Owner == PhotonNetwork.LocalPlayer);
+
+        var gameScreen = Instantiate(gameScreenPrefab);
+        gameScreen.Init(currentPlayer.Pawn);
+        RunTimeLogger.AttachUIText(gameScreen.LogText);
     }
 }

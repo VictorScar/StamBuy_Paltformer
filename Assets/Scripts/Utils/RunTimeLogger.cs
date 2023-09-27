@@ -7,7 +7,7 @@ public class RunTimeLogger
 {
     private static TMP_Text loggerText;
 
-    public static void AttackUIText(TMP_Text uiText)
+    public static void AttachUIText(TMP_Text uiText)
     {
         loggerText = uiText;
     }
