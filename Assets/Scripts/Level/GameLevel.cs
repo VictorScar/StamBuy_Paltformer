@@ -12,6 +12,7 @@ public class GameLevel : MonoBehaviour
     [SerializeField] private Player_UI playerUIPrefab;
     [SerializeField] private PlayerNetwork playerNetwork;
     [SerializeField] private PlayerController pawnPrefab;
+    [SerializeField] private GameStateController gameController;
 
     [SerializeField] private PhotonView pv;
 
@@ -24,7 +25,9 @@ public class GameLevel : MonoBehaviour
     private List<PlayerNetwork> players = new List<PlayerNetwork>();
     private List<PlayerController> playerPawns = new List<PlayerController>();
     public PlayerController CurrentPlayer { get => currentPlayer; }
+    public List<PlayerNetwork> Players { get => players; }
 
+    public event Action<int> onPlayerCountChanged;
 
     private void Awake()
     {
@@ -65,6 +68,7 @@ public class GameLevel : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         PlayersInitialization();
+        gameController.Init(this);
     }
 
     private void CreatePlayer()
@@ -85,6 +89,8 @@ public class GameLevel : MonoBehaviour
                     break;
                 }
             }
+
+            player.onPlayerHasExited += RemovePlayer;
         }
 
         CreateUIScreen();
@@ -107,7 +113,21 @@ public class GameLevel : MonoBehaviour
         var currentPlayer = players.First(p => p.PV.Owner == PhotonNetwork.LocalPlayer);
 
         var gameScreen = Instantiate(gameScreenPrefab);
-        gameScreen.Init(currentPlayer.Pawn);
+        gameScreen.Init(currentPlayer, gameController);
         RunTimeLogger.AttachUIText(gameScreen.LogText);
     }
+
+    private void RemovePlayer(PlayerNetwork playerNetwork)
+    {
+        players.Remove(playerNetwork);
+        onPlayerCountChanged?.Invoke(players.Count);
+    }
+
+    //[PunRPC]
+    //private void RPC_RemovePlayer(PlayerNetwork playerNetwork)
+    //{
+    //    players.Remove(playerNetwork);
+
+
+    //}
 }
