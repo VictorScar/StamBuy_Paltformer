@@ -31,6 +31,8 @@ namespace Photon.Pun
     using UnityEngine.SceneManagement;
     using Photon.Realtime;
     using SupportClassPun = ExitGames.Client.Photon.SupportClass;
+    using System.Collections;
+    using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 
     /// <summary>Replacement for RPC attribute with different name. Used to flag methods as remote-callable.</summary>
@@ -72,6 +74,11 @@ namespace Photon.Pun
                 return this.pvCache;
             }
         }
+
+    //private void OnPlayerDisconnected(NetworkPlayer player)
+    //{
+        
+    //}
 
         //#if UNITY_EDITOR
         //protected virtual void Reset()

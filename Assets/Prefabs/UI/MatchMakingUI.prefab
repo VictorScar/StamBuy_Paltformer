@@ -2259,3 +2259,4 @@ MonoBehaviour:
   createButton: {fileID: 3614841955398425969}
   joinButton: {fileID: 8048183860459805820}
   joinRandomRoomButton: {fileID: 6064173549561120519}
+  content: {fileID: 6155141372694207577}
